@@ -9,7 +9,7 @@ const EspertoSchema = new mongoose.Schema({
 const SedeSchema = new mongoose.Schema({
     nome: {type: String, unique: true, required: true},
     via: String,
-    civico: Number,
+    civico: String,
     esperti: [EspertoSchema]
 })
 

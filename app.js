@@ -5,6 +5,7 @@ const app = express()
 const clienti_routes = require('./routes/clienti.js')
 const incarichi_routes = require('./routes/incarichi.js')
 const sedi_routes = require('./routes/sedi.js')
+const investigatori_routes = require('./routes/investigatori.js')
 
 require('dotenv').config()
 
@@ -16,3 +17,4 @@ app.use(express.json())
 app.use('/boscombe/', clienti_routes)
 app.use('/boscombe/', incarichi_routes)
 app.use('/boscombe/', sedi_routes)
+app.use('/boscombe/', investigatori_routes)
