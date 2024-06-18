@@ -6,6 +6,6 @@ const AfferenzaSchema = new mongoose.Schema({
     data_insediamento: Date
 })
 
-const Afferenza = mongoose.model('Investigatore', AfferenzaSchema)
+const Afferenza = mongoose.model('Afferenza', AfferenzaSchema)
 
 module.exports = Afferenza
