@@ -6,7 +6,9 @@ const  {
     getInformatore,
     createInformatore,
     updateInformatore,
-    deleteInformatore 
+    deleteInformatore,
+    createConsulente,
+    deleteConsulente
 } = require('../controllers/informatori.js')
 
 router.get('/informatori', getInformatori)
@@ -18,5 +20,9 @@ router.post('/informatori', createInformatore)
 router.put('/informatori/:informatoreID', updateInformatore) 
 
 router.delete('/informatori/:informatoreID', deleteInformatore)
+
+router.post('/informatori/consulenti', createConsulente) 
+
+router.delete('/informatori/consulenti/:consulenteID', deleteConsulente) 
 
 module.exports = router
