@@ -35,11 +35,11 @@ const getProveVolatili = (async function(req, res){
                             .populate('sedeID')
                             .catch((error) => res.status(404).json({msg: error}))
 
-    let nomiSedi = [];
-    prove.forEach((p) => nomiSedi.push(p.sedeID.nome))
-    nomiSedi = [...new Set(nomiSedi)];
+    let esperti = [];
+    prove.forEach((p) => esperti.push(p.sedeID.esperti))
+    esperti = [...new Set(esperti)];
     
-    res.status(200).json({nomiSedi}); 
+    res.status(200).json({esperti}); 
 })
 
 
