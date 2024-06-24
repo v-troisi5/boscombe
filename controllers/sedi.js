@@ -50,6 +50,7 @@ const updateEsperto = ((req, res) => {
 
 const deleteEsperto = ((req, res) => {
     Sede.findOneAndUpdate({_id: req.params.sedeID}, {$pull: {esperti: {_id: req.params.espertoID}}}, {new: true, runValidators: true})
+        .then(Prova.updateMany({'espertoID': req.params.espertoID}, {$set: {espertoID: null}}))
         .then(result => res.status(200).json({ result }))
         .catch((error) => res.status(404).json({msg: error}))
 })

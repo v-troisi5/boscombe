@@ -2,32 +2,44 @@ const Prova = require('../models/Prova.js')
 
 const getProve = ((req, res) => {
     Prova.find({})
-        .then(result => res.status(200).json({ result }))
+        .then(result => res.status(200).json({result}))
         .catch(error => res.status(500).json({msg: error}))
 })
 
 const getProva = ((req, res) => {
     Prova.findOne({ _id: req.params.provaID })
         .then(result => res.status(200).json({ result }))
-        .catch(() => res.status(404).json({msg: 'Prova non trovato'}))
+        .catch(() => res.status(404).json({msg: 'Prova non trovata'}))
 })
 
 const createProva = ((req, res) => {
     Prova.create(req.body)
         .then(result => res.status(200).json({ result }))
-        .catch((error) => res.status(500).json({msg:  error }))
+        .catch((error) => res.status(500).json({msg:  error}))
 })
 
 const updateProva = ((req, res) => {
     Prova.findOneAndUpdate({ _id: req.params.provaID }, req.body, { new: true, runValidators: true })
         .then(result => res.status(200).json({ result }))
-        .catch((error) => res.status(404).json({msg: 'Prova non trovato' }))
+        .catch((error) => res.status(404).json({msg: 'Prova non trovata'}))
 })
 
 const deleteProva = ((req, res) => {
     Prova.findOneAndDelete({ _id: req.params.provaID })
         .then(result => res.status(200).json({ result }))
-        .catch((error) => res.status(404).json({msg: 'Prova non trovato' }))
+        .catch((error) => res.status(404).json({msg: 'Prova non trovata'}))
+})
+
+const getProveVolatili = (async function(req, res){
+    let prove = await Prova.find({'volatilità': 'Massima', 'protocollo': req.params.protocollo, 'sedeID': req.params.sedeID})
+                            .populate('sedeID')
+                            .catch((error) => res.status(404).json({msg: error}))
+
+    let nomiSedi = [];
+    prove.forEach((p) => nomiSedi.push(p.sedeID.nome))
+    nomiSedi = [...new Set(nomiSedi)];
+    
+    res.status(200).json({nomiSedi}); 
 })
 
 
@@ -36,5 +48,6 @@ module.exports = {
     getProva,
     createProva,
     updateProva,
-    deleteProva
+    deleteProva,
+    getProveVolatili
 }

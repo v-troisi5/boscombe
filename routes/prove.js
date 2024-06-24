@@ -6,7 +6,8 @@ const  {
     getProva,
     createProva,
     updateProva,
-    deleteProva 
+    deleteProva,
+    getProveVolatili
 } = require('../controllers/prove.js')
 
 router.get('/prove', getProve)
@@ -18,5 +19,7 @@ router.post('/prove', createProva)
 router.put('/prove/:provaID', updateProva) 
 
 router.delete('/prove/:provaID', deleteProva)
+
+router.get('/prove/:sedeID/:protocollo', getProveVolatili)
 
 module.exports = router
