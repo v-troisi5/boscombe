@@ -19,10 +19,5 @@ const InvestigatoreSchema = new mongoose.Schema({
 const Incarico = mongoose.model('Incarico', IncaricoSchema)
 const Investigatore = mongoose.model('Investigatore', InvestigatoreSchema)
 
-IncaricoSchema.index(
-    {_id: 1, clienteID: 1},
-    {unique: true}
-);
-
 module.exports = Incarico
 module.exports = Investigatore

@@ -13,7 +13,7 @@ router.get('/investigatori', getInvestigatori)
 
 router.get('/investigatori/:investigatoreID', getInvestigatore)
 
-router.post('/investigatori', createInvestigatore) 
+router.post('/investigatori/:sedeID', createInvestigatore) 
 
 router.put('/investigatori/:investigatoreID', updateInvestigatore) 
 

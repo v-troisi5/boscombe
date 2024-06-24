@@ -1,3 +1,4 @@
+const Afferenza = require('../models/Afferenza.js')
 const Investigatore = require('../models/Investigatore.js')
 
 const getInvestigatori = ((req, res) => {
@@ -12,8 +13,9 @@ const getInvestigatore = ((req, res) => {
         .catch(() => res.status(404).json({msg: 'Investigatore non trovato'}))
 })
 
-const createInvestigatore = ((req, res) => {
-    Investigatore.create(req.body)
+const createInvestigatore = (async function(req, res){
+    let investigatore = await Investigatore.create(req.body);
+    Afferenza.create({'sedeID': req.params.sedeID, 'investigatoreID': investigatore._id})
         .then(result => res.status(200).json({ result }))
         .catch((error) => res.status(500).json({msg:  error }))
 })

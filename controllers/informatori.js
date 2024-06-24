@@ -1,5 +1,8 @@
 const Informatore = require('../models/Informatore.js')
 const Consulente = require('../models/Consulente.js')
+const Sede = require('../models/Sede.js')
+const Afferenza = require('../models/Afferenza.js')
+const Collaborazione = require('../models/Collaborazione.js')
 
 const getInformatori = ((req, res) => {
     Informatore.find({})
@@ -51,6 +54,28 @@ const deleteConsulente = (async function(req, res) {
         .catch((error) => res.status(404).json({msg: 'Consulente non trovato'}))
 })
 
+const deleteContattiInSede = (async function(req, res) {
+    let sede = await Sede.findOne({'nome': req.params.nomeSede});
+    let afferenze = await Afferenza.find({'sedeID': sede._id}).select('investigatoreID -_id');
+
+    let investigatori = [];
+    afferenze.forEach((a) => investigatori.push(a.investigatoreID));
+
+    let collaborazioni = await Collaborazione.find({'investigatoreID':{$in: investigatori}})
+                                .populate({path: 'informatoreID', match: {'paga': {$lt: 100}}})
+                                .select('informatoreID -_id');
+
+    let informatori = [];
+    collaborazioni.forEach(function(c){;
+        if(c.informatoreID != null)
+            informatori.push(c.informatoreID);
+    })
+
+    Informatore.updateMany({'_id':{$in: informatori}}, {$set: {contatti: []}})
+        .then(result => res.status(200).json({result}))
+        .catch((error) => res.status(500).json({msg: 'Impossibile eseguire l\'operazione specificata'}))
+})
+
 module.exports = {
     getInformatori,
     getInformatore,
@@ -58,5 +83,6 @@ module.exports = {
     updateInformatore,
     deleteInformatore,
     createConsulente,
-    deleteConsulente
+    deleteConsulente,
+    deleteContattiInSede
 }
