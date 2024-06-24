@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const ContattoSchema = new mongoose.Schema({
-    id_contatto: {type: String, unique: true, required: true},
+    id_contatto: {type: String, required: true},
     tipo_contatto: {type: String, required: true}
 })
 

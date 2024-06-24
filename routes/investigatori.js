@@ -6,7 +6,8 @@ const  {
     getInvestigatore,
     createInvestigatore,
     updateInvestigatore,
-    deleteInvestigatore 
+    deleteInvestigatore,
+    updateSedeCriminologia 
 } = require('../controllers/investigatori.js')
 
 router.get('/investigatori', getInvestigatori)
@@ -18,5 +19,7 @@ router.post('/investigatori/:sedeID', createInvestigatore)
 router.put('/investigatori/:investigatoreID', updateInvestigatore) 
 
 router.delete('/investigatori/:investigatoreID', deleteInvestigatore)
+
+router.put('/investigatori/sedi/criminologia', updateSedeCriminologia) 
 
 module.exports = router
