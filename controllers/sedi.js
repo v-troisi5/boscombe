@@ -1,4 +1,7 @@
 const Sede = require('../models/Sede.js')
+const Prova = require('../models/Prova.js')
+const {Incarico,Investigatore} = require('../models/Investigatore.js')
+const Afferenza = require('../models/Afferenza.js')
 
 const getSedi = ((req, res) => {
     Sede.find({})
@@ -55,6 +58,27 @@ const deleteEsperto = ((req, res) => {
         .catch((error) => res.status(404).json({msg: error}))
 })
 
+const getSediProveNoTest = (async function(req, res){
+    let prove = await Prova.find({'test_primario': null})
+                            .populate('incaricoID')
+                            .select('incaricoID -_id');
+
+    let investigatoriIDs = [];
+    prove.forEach((p) => investigatoriIDs.push(p.incaricoID.investigatoreID));
+    
+    let investigatori = await Investigatore.where({'_id': {$in: investigatoriIDs}, 'incarichi.1': {'$exists': true }})
+                                            .select('_id');
+
+    investigatoriIDs = [];
+    investigatori.forEach((p) => investigatoriIDs.push(p._id));
+
+    Afferenza.where({'investigatoreID': {$in: investigatoriIDs}, 'data_insediamento': {$lt: req.params.data}})
+            .populate('sedeID')
+            .select('sedeID -_id')
+            .then(result => res.status(200).json({result}))
+            .catch((error) => res.status(404).json({msg: error}));
+})
+
 module.exports = {
     getSedi,
     getSede,
@@ -64,5 +88,6 @@ module.exports = {
     getEspertoInSede,
     createEsperto,
     updateEsperto,
-    deleteEsperto
+    deleteEsperto,
+    getSediProveNoTest
 }

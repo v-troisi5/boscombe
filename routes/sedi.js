@@ -10,7 +10,8 @@ const  {
     getEspertoInSede,
     createEsperto,
     updateEsperto,
-    deleteEsperto 
+    deleteEsperto,
+    getSediProveNoTest 
 } = require('../controllers/sedi.js')
 
 router.get('/sedi', getSedi)
@@ -30,5 +31,7 @@ router.post('/sedi/:sedeID/esperti', createEsperto)
 router.put('/sedi/:sedeID/esperti/:espertoID', updateEsperto) 
 
 router.delete('/sedi/:sedeID/esperti/:espertoID', deleteEsperto)
+
+router.get('/sedi/prove/test/:data', getSediProveNoTest)
 
 module.exports = router

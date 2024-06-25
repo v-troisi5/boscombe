@@ -1,4 +1,6 @@
 const Prova = require('../models/Prova.js')
+const {Incarico,Investigatore} = require('../models/Investigatore.js')
+const Afferenza = require('../models/Afferenza.js')
 
 const getProve = ((req, res) => {
     Prova.find({})
@@ -26,13 +28,14 @@ const updateProva = ((req, res) => {
 
 const deleteProva = ((req, res) => {
     Prova.findOneAndDelete({ _id: req.params.provaID })
-        .then(result => res.status(200).json({ result }))
+        .then(result => res.status(200).json({result}))
         .catch((error) => res.status(404).json({msg: 'Prova non trovata'}))
 })
 
 const getProveVolatili = (async function(req, res){
     let prove = await Prova.find({'volatilità': 'Massima', 'protocollo': req.params.protocollo, 'sedeID': req.params.sedeID})
                             .populate('sedeID')
+                            .select('sedeID -_id')
                             .catch((error) => res.status(404).json({msg: error}))
 
     let esperti = [];

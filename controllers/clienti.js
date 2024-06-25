@@ -35,6 +35,7 @@ const deleteCliente = ((req, res) => {
 const getMentoriIncarichi = (async function (req, res){
     let incarichi = await Incarico.find({'clienteID': req.params.clienteID, 'tipo_incarico': req.params.tipoIncarico})
                                     .populate('investigatoreID')
+                                    .select('investigatoreID -_id')
 
     let mentoriIDs = []
     incarichi.forEach((i) => mentoriIDs.push(i.investigatoreID.mentore));
