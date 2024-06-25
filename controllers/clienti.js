@@ -1,4 +1,6 @@
 const Cliente = require('../models/Cliente.js')
+const Afferenza = require('../models/Afferenza.js')
+const {Incarico,Investigatore} = require('../models/Investigatore.js')
 
 const getClienti = ((req, res) => {
     Cliente.find({})
@@ -30,11 +32,24 @@ const deleteCliente = ((req, res) => {
         .catch((error) => res.status(404).json({msg: 'Cliente non trovato' }))
 })
 
+const getMentoriIncarichi = (async function (req, res){
+    let incarichi = await Incarico.find({'clienteID': req.params.clienteID, 'tipo_incarico': req.params.tipoIncarico})
+                                    .populate('investigatoreID')
+
+    let mentoriIDs = []
+    incarichi.forEach((i) => mentoriIDs.push(i.investigatoreID.mentore));
+
+    Afferenza.find({'investigatoreID': {$in: mentoriIDs}})
+             .populate('sedeID')
+             .then(result => res.status(200).json({ result }))
+             .catch((error) => res.status(500).json({msg: error}))
+})
 
 module.exports = {
     getClienti,
     getCliente,
     createCliente,
     updateCliente,
-    deleteCliente
+    deleteCliente,
+    getMentoriIncarichi
 }

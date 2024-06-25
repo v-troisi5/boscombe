@@ -6,7 +6,8 @@ const  {
     getCliente,
     createCliente,
     updateCliente,
-    deleteCliente 
+    deleteCliente,
+    getMentoriIncarichi 
 } = require('../controllers/clienti.js')
 
 router.get('/clienti', getClienti)
@@ -18,5 +19,7 @@ router.post('/clienti', createCliente)
 router.put('/clienti/:clienteID', updateCliente) 
 
 router.delete('/clienti/:clienteID', deleteCliente)
+
+router.get('/clienti/:clienteID/incarichi/:tipoIncarico', getMentoriIncarichi)
 
 module.exports = router

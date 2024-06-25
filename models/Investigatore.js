@@ -4,7 +4,8 @@ const IncaricoSchema = new mongoose.Schema({
     data: Date,
     tipo_incarico: {type: String, required: true},
     costo_orario: Number,
-    clienteID: {type: mongoose.Schema.Types.ObjectId, ref: "Cliente", required: true}
+    clienteID: {type: mongoose.Schema.Types.ObjectId, ref: "Cliente", required: true},
+    investigatoreID: {type: mongoose.Schema.Types.ObjectId, ref: "Investigatore"}
 })
 
 const InvestigatoreSchema = new mongoose.Schema({
@@ -19,5 +20,4 @@ const InvestigatoreSchema = new mongoose.Schema({
 const Incarico = mongoose.model('Incarico', IncaricoSchema)
 const Investigatore = mongoose.model('Investigatore', InvestigatoreSchema)
 
-module.exports = Incarico
-module.exports = Investigatore
+module.exports = {Incarico,Investigatore}
