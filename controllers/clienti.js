@@ -46,11 +46,33 @@ const getMentoriIncarichi = (async function (req, res){
              .catch((error) => res.status(500).json({msg: error}))
 })
 
+const getIncarichiOrd = (async function (req, res){
+    Cliente.aggregate(
+        [
+            {'$match': { 
+                'nominativo': req.params.nominativo,
+                'incarichi.tipo_incarico': req.params.tipoIncarico
+            }},
+            {'$sort': {'nominativo': 1 }},
+            {'$group': { 
+                'incarichi.data': { '$first': 'incarichi.data' },
+                'incarichi.costo_orario': { '$first': 'incarichi.costo_orario' },
+                'nominativo': { '$first': 'nominativo' }
+            }},
+            {'$unwind': { 'path' : '$incarichi' }},
+            {'$project': { 'incarichi.data': 1, 'incarichi.costo_orario': 1, 'nominativo': 1}}
+        ]
+    )
+    .then(result => res.status(200).json({result}))
+    .catch((error) => res.status(500).json({msg: error}))
+})
+
 module.exports = {
     getClienti,
     getCliente,
     createCliente,
     updateCliente,
     deleteCliente,
-    getMentoriIncarichi
+    getMentoriIncarichi,
+    getIncarichiOrd
 }
