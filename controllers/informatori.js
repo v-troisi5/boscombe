@@ -3,6 +3,7 @@ const Consulente = require('../models/Consulente.js')
 const Sede = require('../models/Sede.js')
 const Afferenza = require('../models/Afferenza.js')
 const Collaborazione = require('../models/Collaborazione.js')
+const {Incarico,Investigatore} = require('../models/Investigatore.js')
 
 const getInformatori = ((req, res) => {
     Informatore.find({})
@@ -76,6 +77,40 @@ const deleteContattiInSede = (async function(req, res) {
         .catch((error) => res.status(500).json({msg: 'Impossibile eseguire l\'operazione specificata'}))
 })
 
+const getInformatoriCosto = (async function (req, res){
+    let incarichi = await Incarico.find({'costo_orario': {$gt: req.params.costoOrario}})
+                                    .populate('investigatoreID')
+                                    .select('investigatoreID -_id');
+    
+    console.log(incarichi);
+
+    let investigatoriIDs = []
+    incarichi.forEach((i) => investigatoriIDs.push(i.investigatoreID._id));
+    investigatoriIDs = [...new Set(investigatoriIDs)];
+
+    console.log(investigatoriIDs);
+
+    let consulenti = await Consulente.find({'titolo_studio': {$ne: null}})
+                                            .select('informatoreID -_id');
+
+    let informatoriIDs = []
+    consulenti.forEach((i) => informatoriIDs.push(i.informatoreID));
+    console.log(informatoriIDs);
+
+    let informatori = await Collaborazione.find({'investigatoreID': {$in: investigatoriIDs}, 'informatoreID': {$in: informatoriIDs}})
+                                             .populate('informatoreID')
+                                             .select('informatoreID -_id');
+    console.log(informatori);
+
+    let informatoriNominativi = []
+    informatori.forEach((i) => informatoriNominativi.push(informatori.nome + ' ' + informatori.cognome));
+    informatori = [...new Set(informatori)];
+
+    console.log(informatori);
+
+    res.status(200).json({informatori})
+})
+
 module.exports = {
     getInformatori,
     getInformatore,
@@ -84,5 +119,6 @@ module.exports = {
     deleteInformatore,
     createConsulente,
     deleteConsulente,
-    deleteContattiInSede
+    deleteContattiInSede,
+    getInformatoriCosto
 }

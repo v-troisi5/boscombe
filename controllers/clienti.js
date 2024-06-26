@@ -1,8 +1,6 @@
 const Cliente = require('../models/Cliente.js')
 const Afferenza = require('../models/Afferenza.js')
 const {Incarico,Investigatore} = require('../models/Investigatore.js')
-const Informatore = require('../models/Informatore.js')
-const Collaborazione = require('../models/Collaborazione.js')
 
 const getClienti = ((req, res) => {
     Cliente.find({})
@@ -48,33 +46,11 @@ const getMentoriIncarichi = (async function (req, res){
              .catch((error) => res.status(500).json({msg: error}))
 })
 
-const getClientiInfCosto = (async function (req, res){
-    let incarichi = await Incarico.find({'costo_orario': req.params.costoOrario})
-                                    .populate('investigatoreID')
-                                    .select('investigatoreID -_id');
-    
-    let investigatoriIDs = []
-    incarichi.forEach((i) => investigatoriIDs.push(i.investigatoreID._id));
-
-    let informatoriIDs = await Informatore.find({'titolo_studio': {$ne: null}})
-                                            .select('_id');
-
-    let informatori = await Collaborazione.find({'investigatoreID': {$in: investigatoriIDs}, 'informatoreID': {$in: informatoriIDs}})
-                                             .populate('informatoreID')
-                                             .select('informatoreID -_id');
-    let informatoriNominativi = []
-    informatori.forEach((i) => informatoriNominativi.push(informatori.informatoreID.nome + ' ' + informatori.informatoreID.cognome));
-    informatori = [...new Set(informatori)];
-
-    res.status(200).json({informatori})
-})
-
 module.exports = {
     getClienti,
     getCliente,
     createCliente,
     updateCliente,
     deleteCliente,
-    getMentoriIncarichi,
-    getClientiInfCosto
+    getMentoriIncarichi
 }

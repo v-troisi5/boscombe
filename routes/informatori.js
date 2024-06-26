@@ -9,7 +9,8 @@ const  {
     deleteInformatore,
     createConsulente,
     deleteConsulente,
-    deleteContattiInSede
+    deleteContattiInSede,
+    getInformatoriCosto
 } = require('../controllers/informatori.js')
 
 router.get('/informatori', getInformatori)
@@ -27,5 +28,7 @@ router.post('/informatori/consulenti', createConsulente)
 router.delete('/informatori/consulenti/:consulenteID', deleteConsulente) 
 
 router.delete('/informatori/contattiSede/:nomeSede', deleteContattiInSede) 
+
+router.get('/informatori/incarichi/:costoOrario', getInformatoriCosto)
 
 module.exports = router
