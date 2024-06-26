@@ -32,7 +32,7 @@ const deleteCliente = ((req, res) => {
         .catch((error) => res.status(404).json({msg: 'Cliente non trovato' }))
 })
 
-const getMentoriIncarichi = (async function (req, res){
+const getAfferenzeMentoriIncarichi = (async function (req, res){
     let incarichi = await Incarico.find({'clienteID': req.params.clienteID, 'tipo_incarico': req.params.tipoIncarico})
                                     .populate('investigatoreID')
                                     .select('investigatoreID -_id')
@@ -49,18 +49,28 @@ const getMentoriIncarichi = (async function (req, res){
 const getIncarichiOrd = (async function (req, res){
     Cliente.aggregate(
         [
-            {'$match': { 
-                'nominativo': req.params.nominativo,
-                'incarichi.tipo_incarico': req.params.tipoIncarico
-            }},
-            {'$sort': {'nominativo': 1 }},
-            {'$group': { 
-                'incarichi.data': { '$first': 'incarichi.data' },
-                'incarichi.costo_orario': { '$first': 'incarichi.costo_orario' },
-                'nominativo': { '$first': 'nominativo' }
-            }},
-            {'$unwind': { 'path' : '$incarichi' }},
-            {'$project': { 'incarichi.data': 1, 'incarichi.costo_orario': 1, 'nominativo': 1}}
+            {
+                '$unwind': {'path' : '$incarichi'}
+            },
+            {
+                '$match': { 
+                    'nominativo': req.params.nominativo,
+                    'incarichi.tipo_incarico': req.params.tipoIncarico
+                }
+            },
+            {
+                '$group': { 
+                    '_id': '$incarichi.data',
+                    'sommaCostiOrari': {
+                        $sum: "$incarichi.costo_orario"
+                    }
+                }
+            },
+            {
+                '$sort': { 
+                    'incarichi_data': 1
+                }
+            }
         ]
     )
     .then(result => res.status(200).json({result}))
@@ -73,6 +83,6 @@ module.exports = {
     createCliente,
     updateCliente,
     deleteCliente,
-    getMentoriIncarichi,
+    getAfferenzeMentoriIncarichi,
     getIncarichiOrd
 }

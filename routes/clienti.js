@@ -7,7 +7,7 @@ const  {
     createCliente,
     updateCliente,
     deleteCliente,
-    getMentoriIncarichi,
+    getAfferenzeMentoriIncarichi,
     getIncarichiOrd
 } = require('../controllers/clienti.js')
 
@@ -21,8 +21,8 @@ router.put('/clienti/:clienteID', updateCliente)
 
 router.delete('/clienti/:clienteID', deleteCliente)
 
-router.get('/clienti/:clienteID/incarichi/:tipoIncarico', getMentoriIncarichi)
+router.get('/clienti/:clienteID/incarichi/:tipoIncarico', getAfferenzeMentoriIncarichi)
 
-router.get('/clienti/incarichi/:tipoIncarico', getIncarichiOrd)
+router.get('/clienti/incarichi/:nominativo/:tipoIncarico', getIncarichiOrd)
 
 module.exports = router
