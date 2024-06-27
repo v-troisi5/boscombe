@@ -8,7 +8,6 @@ const ProvaSchema = new mongoose.Schema({
     test_primario: String,
     sedeID: {type: mongoose.Schema.Types.ObjectId, ref: "Sede"},
     espertoID: {type: mongoose.Schema.Types.ObjectId, ref: "Esperto"},
-    clienteID: {type: mongoose.Schema.Types.ObjectId, ref: "Cliente"},
     incaricoID: {type: mongoose.Schema.Types.ObjectId, ref: "Incarico"},
     tipologia_traccia: String,
     volatilità: String,
