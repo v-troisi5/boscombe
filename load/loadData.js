@@ -47,6 +47,17 @@ async function main() {
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
 
+    console.log("Aggiorno investigatoreID negli incarichi");
+    data.forEach(async function(i){
+        await currentCollection.updateMany({ _id: i._id, 'incarichi.0': {'$exists': true }}, {$set: {"incarichi.0.investigatoreID": i._id}});
+    });
+    data.forEach(async function(i){
+        await currentCollection.updateMany({ _id: i._id, 'incarichi.1': {'$exists': true }}, {$set: {"incarichi.1.investigatoreID": i._id}});
+    });
+    data.forEach(async function(i){
+        await currentCollection.updateMany({ _id: i._id, 'incarichi.2': {'$exists': true }}, {$set: {"incarichi.2.investigatoreID": i._id}});
+    });
+
     console.log("Aggiorno i clienti con gli incarichi");
     currentCollection = db.collection("clientes");
     data.forEach(async function(c){
@@ -54,7 +65,6 @@ async function main() {
         await currentCollection.updateMany({ _id: i.clienteID }, {$push: {incarichi: i}});
       }))
     });
-    console.log("Aggiornamento clienti terminato");
 
     //Afferenze
     collectionName = "afferenzas";
