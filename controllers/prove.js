@@ -33,11 +33,14 @@ const deleteProva = ((req, res) => {
 })
 
 const getProveVolatili = (async function(req, res){
-    let prove = await Prova.find({'volatilità': 'Massima', 'protocollo': req.params.protocollo, 'sedeID': req.params.sedeID})
+    let prove = await Prova.find({'volatilità': 'Massima', 'sedeID': req.params.sedeID})
                             .populate('sedeID')
                             .select('sedeID -_id')
                             .catch((error) => res.status(404).json({msg: error}))
 
+
+    console.log(prove);
+                            
     let esperti = [];
     prove.forEach((p) => esperti.push(p.sedeID.esperti))
     esperti = [...new Set(esperti)];

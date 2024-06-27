@@ -20,6 +20,6 @@ router.put('/prove/:provaID', updateProva)
 
 router.delete('/prove/:provaID', deleteProva)
 
-router.get('/prove/sedi/:sedeID/:protocollo', getProveVolatili)
+router.get('/prove/sedi/:sedeID/', getProveVolatili)
 
 module.exports = router

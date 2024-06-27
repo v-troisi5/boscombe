@@ -59,7 +59,7 @@ const deleteEsperto = ((req, res) => {
 })
 
 const getSediProveNoTest = (async function(req, res){
-    let prove = await Prova.find({'test_primario': null})
+    let prove = await Prova.find({'test_primario': req.params.testPrimario})
                             .populate('incaricoID')
                             .select('incaricoID -_id');
 
@@ -68,11 +68,11 @@ const getSediProveNoTest = (async function(req, res){
     
     let investigatori = await Investigatore.where({'_id': {$in: investigatoriIDs}, 'incarichi.1': {'$exists': true }})
                                             .select('_id');
-
+                                            
     investigatoriIDs = [];
     investigatori.forEach((p) => investigatoriIDs.push(p._id));
 
-    Afferenza.where({'investigatoreID': {$in: investigatoriIDs}, 'data_insediamento': {$lt: req.params.data}})
+    Afferenza.where({'investigatoreID': {$in: investigatoriIDs}, 'data_insediamento.$date': {$lt: req.params.data}})
             .populate('sedeID')
             .select('sedeID -_id')
             .then(result => res.status(200).json({result}))

@@ -32,6 +32,6 @@ router.put('/sedi/:sedeID/esperti/:espertoID', updateEsperto)
 
 router.delete('/sedi/:sedeID/esperti/:espertoID', deleteEsperto)
 
-router.get('/sedi/prove/test/:data', getSediProveNoTest)
+router.get('/sedi/prove/test/:testPrimario/:data', getSediProveNoTest)
 
 module.exports = router
