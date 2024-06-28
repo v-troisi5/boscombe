@@ -90,6 +90,19 @@ function eseguiOp(event, operation) {
         }
         sendConsulente();
     }
+    else if(operation == 'operazione2'){
+        let nomeSede = document.getElementById('op2_nomeSede').value;
+
+        async function doOp2(){
+            const rawResponse = await fetch(`/boscombe/informatori/contattiSede/` + nomeSede, {
+              method: 'DELETE'
+            });
+            const content = await rawResponse.json();
+
+            op2FormatTable(content);
+        }
+        doOp2();
+    }
     else if(operation == 'operazione4'){
         let sedeID = document.getElementById('op4sedeID').value;
 
@@ -155,6 +168,18 @@ function op1FormatTable(data) {
     deleteConsulenteButton.setAttribute('onclick','deleteConsulente(\'' + consulente.informatoreID +'\');return false;');
     deleteConsulenteButton.appendChild(document.createTextNode("Elimina"));
     cell.appendChild(deleteConsulenteButton);
+}
+
+function op2FormatTable(data) {
+    console.log(data)
+    const table = document.getElementById(`operazione2-table`).getElementsByTagName('tbody')[0];
+
+    const row = table.insertRow();
+
+    let cell = row.insertCell();
+    cell.textContent = data.result.matchedCount;
+    cell = row.insertCell();
+    cell.textContent = data.result.modifiedCount;
 }
 
 function op4FormatTable(data) {

@@ -196,6 +196,26 @@
                 </table>
             </div>
 
+            <!--OP2: /boscombe/informatori/contattiSede/:nomeSede-->
+            <div id="operazione2-div" style="display: none;">
+                <div>
+                    <form id="op2Form" onsubmit="eseguiOp(event,'operazione2');return false;">
+                        Nome della sede: <input type="text" id="op2_nomeSede" style="width: 200px;"/>
+                        <br><br>
+                        <button type="submit">Esegui</button>
+                    </form>
+                </div>
+                <table id="operazione2-table">
+                    <thead>
+                        <tr>
+                            <th>Matched count</th>
+                            <th>Modified count</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
             <!--OP4: /boscombe/prove/sedi/:sedeID/-->
             <div id="operazione4-div" style="display: none;">
                 <div>
