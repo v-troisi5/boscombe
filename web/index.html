@@ -148,14 +148,14 @@
 
             <nav class="sub-nav">
                 <ul>
-                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione1')">Operazione 1</li>
-                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione2')">Operazione 2</li>
-                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione3')">Operazione 3</li>
+                    <li class="sub-tab" onclick="showOp('operazione1')">Operazione 1</li>
+                    <li class="sub-tab" onclick="showOp('operazione2')">Operazione 2</li>
+                    <li class="sub-tab" onclick="showOp('operazione3')">Operazione 3</li>
                     <li class="sub-tab" onclick="showOp('operazione4')">Operazione 4</li>
                     <li class="sub-tab" onclick="showOp('operazione5')">Operazione 5</li>
-                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione6')">Operazione 6</li>
-                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione7')">Operazione 7</li>
-                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione8')">Operazione 8</li>
+                    <li class="sub-tab" onclick="showOp('operazione6')">Operazione 6</li>
+                    <li class="sub-tab" onclick="showOp('operazione7')">Operazione 7</li>
+                    <li class="sub-tab" onclick="showOp('operazione8')">Operazione 8</li>
                 </ul>
             </nav>
 
@@ -201,6 +201,55 @@
                             <th>InvestigatoreID</th>
                             <th>SedeID</th>
                             <th>Nome sede</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!--OP6: /boscombe/sedi/prove/test/:testPrimario/:data-->
+            <div id="operazione6-div" style="display: none;">
+                <div>
+                    <form id="op6Form" onsubmit="eseguiOp('operazione6');return false;">
+                        Test primario: <input type="text" id="op6testPrimario" style="width: 200px;"/>
+                        <br><br>
+                        Data insediamento: <input type="date" id="op6dataInsediamento" style="width: 200px;"/>
+                        <br><br>
+                        <button type="submit">Esegui</button>
+                    </form>
+                </div>
+                <table id="operazione6-table">
+                    <thead>
+                        <tr>
+                            <th>SedeID</th>
+                            <th>Nome sede</th>
+                            <th>Via</th>
+                            <th>Civico</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!--OP7: /boscombe/informatori/incarichi/:costoOrario-->
+            <div id="operazione7-div" style="display: none;">
+                <div>
+                    <form id="op7Form" onsubmit="eseguiOp('operazione7');return false;">
+                        Costo orario: <input type="number" id="op7costoOrario" style="width: 200px;"/>
+                        <br><br>
+                        <button type="submit">Esegui</button>
+                    </form>
+                </div>
+                <table id="operazione7-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Codice fiscale</th>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>Paga</th>
+                            <th>Descrizione</th>
+                            <th>Contatti</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
