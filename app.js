@@ -20,3 +20,7 @@ app.use('/boscombe/', sedi_routes)
 app.use('/boscombe/', investigatori_routes)
 app.use('/boscombe/', prove_routes)
 app.use('/boscombe/', informatori_routes)
+
+app.get('/boscombe', function(request, response){
+    response.sendFile('index.html',  {root: './web'});
+});
