@@ -7,6 +7,29 @@ function makeTablesInvisible(){
     document.getElementById('errorLabel').innerHTML = '';
 }
 
+function op1MakeContatti(){
+    let form = document.getElementById(`op1Form`);
+
+    let idContattoInput = document.createElement('input');
+    idContattoInput.setAttribute('type', 'text');
+    idContattoInput.setAttribute('placeholder', 'Contatto');
+    idContattoInput.setAttribute('name', 'id_contatto');
+
+    let tipoContattoInput = document.createElement('input');
+    tipoContattoInput.setAttribute('type', 'text');
+    tipoContattoInput.setAttribute('placeholder', 'Tipo di contatto');
+    tipoContattoInput.setAttribute('name', 'tipo_contatto');
+
+    form.appendChild(document.createElement('br'));
+    form.appendChild(document.createElement('br'));
+    form.appendChild(document.createTextNode('Informazioni di contatto:'));
+    form.appendChild(document.createElement('br'));
+    form.appendChild(idContattoInput);
+    form.appendChild(document.createElement('br'));
+    form.appendChild(document.createElement('br'));
+    form.appendChild(tipoContattoInput);
+}
+
 function showOp(operation) {
     makeTablesInvisible();
     document.getElementById(operation + `-div`).style.display = 'block';
@@ -17,7 +40,57 @@ function eseguiOp(event, operation) {
     event.preventDefault();
     let errorLabel = document.getElementById('errorLabel');
 
-    if(operation == 'operazione4'){
+    if(operation == 'operazione1'){
+        const formData = new FormData();
+        formData.append(document.getElementById('op1_codice_fiscale').getAttribute('name'), document.getElementById('op1_codice_fiscale').value);
+        formData.append(document.getElementById('op1_nome').getAttribute('name'), document.getElementById('op1_nome').value);
+        formData.append(document.getElementById('op1_cognome').getAttribute('name'), document.getElementById('op1_cognome').value);
+        formData.append(document.getElementById('op1_paga').getAttribute('name'), document.getElementById('op1_paga').value);
+        formData.append(document.getElementById('op1_descrizione').getAttribute('name'), document.getElementById('op1_descrizione').value);
+        formData.append(document.getElementById('op1_area_competenza').getAttribute('name'), document.getElementById('op1_area_competenza').value);
+        formData.append(document.getElementById('op1_titolo_studio').getAttribute('name'), document.getElementById('op1_titolo_studio').value);
+
+        let contatti = [];
+        let j = 0;
+        document.getElementsByName('id_contatto').forEach(function(id){
+            let tipo = document.getElementsByName('tipo_contatto')[j];
+
+            let contattoObject = {};
+            contattoObject.id_contatto = id.value;
+            contattoObject.tipo_contatto = tipo.value;
+            contatti.push(contattoObject);
+
+            j++;
+        })
+
+        console.log(contatti)
+        
+        let formDataObject = {};
+        formData.forEach(function(value, key){
+            formDataObject[key] = value;
+        });
+
+        formDataObject.contatti = contatti;
+        var json = JSON.stringify(formDataObject);
+
+        console.log(json)
+
+        async function sendConsulente(){
+            const rawResponse = await fetch(`/boscombe/informatori/consulenti/`, {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: json
+            });
+            const content = await rawResponse.json();
+          
+            op1FormatTable(content);
+        }
+        sendConsulente();
+    }
+    else if(operation == 'operazione4'){
         let sedeID = document.getElementById('op4sedeID').value;
 
         fetch(`/boscombe/prove/sedi/` + sedeID)
@@ -60,6 +133,28 @@ function eseguiOp(event, operation) {
             .then(data => op8FormatTable(data))
             .catch(error => errorLabel.innerHTML = 'Nessun risultato.');
     }
+}
+
+function op1FormatTable(data) {
+    console.log(data)
+    const table = document.getElementById(`operazione1-table`).getElementsByTagName('tbody')[0];
+    const row = table.insertRow();
+
+    const consulente = data.result;
+
+    let cell = row.insertCell();
+    cell.textContent = consulente.informatoreID;
+    cell = row.insertCell();
+    cell.textContent = consulente.area_competenza;
+    cell = row.insertCell();
+    cell.textContent = consulente.titolo_studio;
+
+    cell = row.insertCell();
+    let deleteConsulenteButton = document.createElement('button');
+    deleteConsulenteButton.setAttribute('style','background-color: darkred; min-width: 100%;');
+    deleteConsulenteButton.setAttribute('onclick','deleteConsulente(\'' + consulente.informatoreID +'\');return false;');
+    deleteConsulenteButton.appendChild(document.createTextNode("Elimina"));
+    cell.appendChild(deleteConsulenteButton);
 }
 
 function op4FormatTable(data) {
@@ -189,4 +284,16 @@ function op8FormatTable(data) {
             cell = row.insertCell();
             cell.textContent = elem.sommaCostiOrari;
     });
+}
+
+function deleteConsulente(id){
+    async function doDeleteConsulente(){
+        const rawResponse = await fetch(`/boscombe/informatori/consulenti/` + id, {
+          method: 'DELETE'
+        });
+        const content = await rawResponse.json();
+
+        document.getElementById('operazione1-table').getElementsByTagName('tbody')[0].innerHTML = "";
+    }
+    doDeleteConsulente();
 }

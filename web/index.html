@@ -161,6 +161,41 @@
 
             <!--Tabelle per operazioni campione-->
 
+            <!--OP1: /boscombe/informatori/consulenti/-->
+            <div id="operazione1-div" style="display: none;">
+                <div>
+                    <form id="op1Form" onsubmit="eseguiOp(event,'operazione1');return false;">
+                        Codice Fiscale: <input type="text" name="codice_fiscale" id="op1_codice_fiscale" style="width: 200px;"/>
+                        <br><br>
+                        Nome: <input type="text" name="nome" id="op1_nome" style="width: 200px;"/>
+                        <br><br>
+                        Cognome: <input type="text" name="cognome" id="op1_cognome" style="width: 200px;"/>
+                        <br><br>
+                        Paga: <input type="number" name="paga" id="op1_paga" style="width: 200px;"/>
+                        <br><br>
+                        Descrizione: <input type="textarea" name="descrizione" id="op1_descrizione"/>
+                        <br><br>
+                        Area di competenza: <input type="text" name="area_competenza" id="op1_area_competenza" style="width: 200px;"/>
+                        <br><br>
+                        Titolo di studio: <input type="text" name="titolo_studio" id="op1_titolo_studio" style="width: 200px;"/>
+                        <br><br>
+                        <button type="submit">Esegui</button>
+                        <br><br>
+                        <button style="background-color: grey; min-width: 100%;" onclick="op1MakeContatti();return false;">Aggiungi un contatto</button>
+                    </form>
+                </div>
+                <table id="operazione1-table">
+                    <thead>
+                        <tr>
+                            <th>InformatoreID</th>
+                            <th>Area di competenza</th>
+                            <th>Titolo di studio</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
             <!--OP4: /boscombe/prove/sedi/:sedeID/-->
             <div id="operazione4-div" style="display: none;">
                 <div>
