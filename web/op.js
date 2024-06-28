@@ -4,6 +4,7 @@ function makeTablesInvisible(){
         if(tb != null)
             tb.style.display = 'none';
     }
+    document.getElementById('errorLabel').innerHTML = '';
 }
 
 function showOp(operation) {
@@ -12,14 +13,17 @@ function showOp(operation) {
     document.getElementById(operation + `-table`).getElementsByTagName('tbody')[0].innerHTML = '';
 }
 
-function eseguiOp(operation) {
+function eseguiOp(event, operation) {
+    event.preventDefault();
+    let errorLabel = document.getElementById('errorLabel');
+
     if(operation == 'operazione4'){
         let sedeID = document.getElementById('op4sedeID').value;
 
         fetch(`/boscombe/prove/sedi/` + sedeID)
             .then(response => response.json())
             .then(data => op4FormatTable(data))
-            .catch(error => console.error('Errore durante l\'operazione 4', error));
+            .catch(error => errorLabel.innerHTML = 'Nessun risultato.');
     }
     else if(operation == 'operazione5'){
         let clienteID = document.getElementById('op5clienteID').value;
@@ -28,7 +32,7 @@ function eseguiOp(operation) {
         fetch(`/boscombe/clienti/` + clienteID + `/incarichi/` + tipoIncarico)
             .then(response => response.json())
             .then(data => op5FormatTable(data))
-            .catch(error => console.error('Errore durante l\'operazione 5', error));
+            .catch(error => errorLabel.innerHTML = 'Nessun risultato.');
     }
     else if(operation == 'operazione6'){
         let testPrimario = document.getElementById('op6testPrimario').value;
@@ -37,7 +41,7 @@ function eseguiOp(operation) {
         fetch(`/boscombe/sedi/prove/test/` + testPrimario + `/` + dataInsediamento)
             .then(response => response.json())
             .then(data => op6FormatTable(data))
-            .catch(error => console.error('Errore durante l\'operazione 6', error));
+            .catch(error => errorLabel.innerHTML = 'Nessun risultato.');
     }
     else if(operation == 'operazione7'){
         let costoOrario = document.getElementById('op7costoOrario').value;
@@ -45,7 +49,16 @@ function eseguiOp(operation) {
         fetch(`/boscombe/informatori/incarichi/` + costoOrario)
             .then(response => response.json())
             .then(data => op7FormatTable(data))
-            .catch(error => console.error('Errore durante l\'operazione 7', error));
+            .catch(error => errorLabel.innerHTML = 'Nessun risultato.');
+    }
+    else if(operation == 'operazione8'){
+        let nominativo = document.getElementById('op8nominativo').value;
+        let tipoIncarico = document.getElementById('op8tipoIncarico').value;
+
+        fetch(`/boscombe/clienti/incarichi/` + nominativo + `/` + tipoIncarico)
+            .then(response => response.json())
+            .then(data => op8FormatTable(data))
+            .catch(error => errorLabel.innerHTML = 'Nessun risultato.');
     }
 }
 
@@ -160,5 +173,20 @@ function op7FormatTable(data) {
                     contattiCell.textContent = contatto.tipo_contatto;
                 }
             )
+    });
+}
+
+function op8FormatTable(data) {
+    console.log(data)
+    const table = document.getElementById(`operazione8-table`).getElementsByTagName('tbody')[0];
+
+    data.result.forEach(
+        function(elem){
+            const row = table.insertRow();
+
+            let cell = row.insertCell();
+            cell.textContent = new Date(elem._id.$date);
+            cell = row.insertCell();
+            cell.textContent = elem.sommaCostiOrari;
     });
 }

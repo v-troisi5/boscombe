@@ -164,7 +164,7 @@
             <!--OP4: /boscombe/prove/sedi/:sedeID/-->
             <div id="operazione4-div" style="display: none;">
                 <div>
-                    <form id="op4Form" onsubmit="eseguiOp('operazione4');return false;">
+                    <form id="op4Form" onsubmit="eseguiOp(event,'operazione4');return false;">
                         ID sede: <input type="text" id="op4sedeID" style="width: 200px;"/>
                         <br><br>
                         <button type="submit">Esegui</button>
@@ -186,7 +186,7 @@
             <!--OP5: /boscombe/clienti/:clienteID/incarichi/:tipoIncarico-->
             <div id="operazione5-div" style="display: none;">
                 <div>
-                    <form id="op5Form" onsubmit="eseguiOp('operazione5');return false;">
+                    <form id="op5Form" onsubmit="eseguiOp(event,'operazione5');return false;">
                         ID cliente: <input type="text" id="op5clienteID" style="width: 200px;"/>
                         <br><br>
                         Tipo incarico: <input type="text" id="op5tipoIncarico" style="width: 200px;"/>
@@ -210,7 +210,7 @@
             <!--OP6: /boscombe/sedi/prove/test/:testPrimario/:data-->
             <div id="operazione6-div" style="display: none;">
                 <div>
-                    <form id="op6Form" onsubmit="eseguiOp('operazione6');return false;">
+                    <form id="op6Form" onsubmit="eseguiOp(event,'operazione6');return false;">
                         Test primario: <input type="text" id="op6testPrimario" style="width: 200px;"/>
                         <br><br>
                         Data insediamento: <input type="date" id="op6dataInsediamento" style="width: 200px;"/>
@@ -234,7 +234,7 @@
             <!--OP7: /boscombe/informatori/incarichi/:costoOrario-->
             <div id="operazione7-div" style="display: none;">
                 <div>
-                    <form id="op7Form" onsubmit="eseguiOp('operazione7');return false;">
+                    <form id="op7Form" onsubmit="eseguiOp(event,'operazione7');return false;">
                         Costo orario: <input type="number" id="op7costoOrario" style="width: 200px;"/>
                         <br><br>
                         <button type="submit">Esegui</button>
@@ -256,6 +256,30 @@
                 </table>
             </div>
 
+            <!--OP8: /boscombe/clienti/incarichi/:nominativo/:tipoIncarico-->
+            <div id="operazione8-div" style="display: none;">
+                <div>
+                    <form id="op8Form" onsubmit="eseguiOp(event,'operazione8');return false;">
+                        Nominativo: <input type="text" id="op8nominativo" style="width: 200px;"/>
+                        <br><br>
+                        Tipo incarico: <input type="text" id="op8tipoIncarico" style="width: 200px;"/>
+                        <br><br>
+                        <button type="submit">Esegui</button>
+                    </form>
+                </div>
+                <table id="operazione8-table">
+                    <thead>
+                        <tr>
+                            <th>Data (raggrup.)</th>
+                            <th>Somma costi orari</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <br><br>
+            <label id="errorLabel" style="color: red;"></label>
         </div>
     </div>
     <script src="script.js"></script>
