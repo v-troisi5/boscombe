@@ -1,12 +1,14 @@
 function makeTablesInvisible(){
-    for(i = 1; i <= 8; i++){
-        document.getElementById(operation + `-div`).style.visibility = 'hidden';
+    for(let i = 1; i <= 8; i++){
+        let tb = document.getElementById(`operazione` + i + `-div`);
+        if(tb != null)
+            tb.style.display = 'none';
     }
 }
 
 function showOp(operation) {
     makeTablesInvisible();
-    document.getElementById(operation + `-div`).style.visibility = 'visible';
+    document.getElementById(operation + `-div`).style.display = 'block';
     document.getElementById(operation + `-table`).getElementsByTagName('tbody')[0].innerHTML = '';
 }
 
@@ -53,17 +55,17 @@ function op5FormatTable(data) {
     console.log(data)
     const table = document.getElementById(`operazione5-table`).getElementsByTagName('tbody')[0];
 
-    data.esperti[0].forEach(
-        function(e){
+    data.result.forEach(
+        function(elem){
             const row = table.insertRow();
 
             let cell = row.insertCell();
-            cell.textContent = e._id;
+            cell.textContent = elem._id;
             cell = row.insertCell();
-            cell.textContent = e.nome;
+            cell.textContent = elem.investigatoreID;
             cell = row.insertCell();
-            cell.textContent = e.cognome;
+            cell.textContent = elem.sedeID._id;
             cell = row.insertCell();
-            cell.textContent = e.professione;
+            cell.textContent = elem.sedeID.nome;
     });
 }

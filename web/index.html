@@ -152,7 +152,7 @@
                     <li class="sub-tab" onclick="eseguiOp(event, 'operazione2')">Operazione 2</li>
                     <li class="sub-tab" onclick="eseguiOp(event, 'operazione3')">Operazione 3</li>
                     <li class="sub-tab" onclick="showOp('operazione4')">Operazione 4</li>
-                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione5')">Operazione 5</li>
+                    <li class="sub-tab" onclick="showOp('operazione5')">Operazione 5</li>
                     <li class="sub-tab" onclick="eseguiOp(event, 'operazione6')">Operazione 6</li>
                     <li class="sub-tab" onclick="eseguiOp(event, 'operazione7')">Operazione 7</li>
                     <li class="sub-tab" onclick="eseguiOp(event, 'operazione8')">Operazione 8</li>
@@ -162,7 +162,7 @@
             <!--Tabelle per operazioni campione-->
 
             <!--OP4: /boscombe/prove/sedi/:sedeID/-->
-            <div id="operazione4-div" style="visibility: hidden;">
+            <div id="operazione4-div" style="display: none;">
                 <div>
                     <form id="op4Form" onsubmit="eseguiOp('operazione4');return false;">
                         ID sede: <input type="text" id="op4sedeID" style="width: 200px;"/>
@@ -184,11 +184,11 @@
             </div>
 
             <!--OP5: /boscombe/clienti/:clienteID/incarichi/:tipoIncarico-->
-            <div id="operazione5-div" style="visibility: hidden;">
+            <div id="operazione5-div" style="display: none;">
                 <div>
                     <form id="op5Form" onsubmit="eseguiOp('operazione5');return false;">
-                        ID sede: <input type="text" id="op5clienteID" style="width: 200px;"/>
-                        <br>
+                        ID cliente: <input type="text" id="op5clienteID" style="width: 200px;"/>
+                        <br><br>
                         Tipo incarico: <input type="text" id="op5tipoIncarico" style="width: 200px;"/>
                         <br><br>
                         <button type="submit">Esegui</button>
@@ -198,9 +198,9 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nome</th>
-                            <th>Cognome</th>
-                            <th>Professione</th>
+                            <th>InvestigatoreID</th>
+                            <th>SedeID</th>
+                            <th>Nome sede</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
