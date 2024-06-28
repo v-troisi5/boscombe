@@ -103,6 +103,17 @@ function eseguiOp(event, operation) {
         }
         doOp2();
     }
+    else if(operation == 'operazione3'){
+        async function doOp3(){
+            const rawResponse = await fetch(`/boscombe/investigatori/sedi/criminologia`, {
+              method: 'PUT'
+            });
+            const content = await rawResponse.json();
+
+            op3FormatTable(content);
+        }
+        doOp3();
+    }
     else if(operation == 'operazione4'){
         let sedeID = document.getElementById('op4sedeID').value;
 
@@ -180,6 +191,16 @@ function op2FormatTable(data) {
     cell.textContent = data.result.matchedCount;
     cell = row.insertCell();
     cell.textContent = data.result.modifiedCount;
+}
+
+function op3FormatTable(data) {
+    console.log(data)
+    const table = document.getElementById(`operazione3-table`).getElementsByTagName('tbody')[0];
+
+    const row = table.insertRow();
+
+    let cell = row.insertCell();
+    cell.textContent = data.result.deletedCount;
 }
 
 function op4FormatTable(data) {
