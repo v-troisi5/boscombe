@@ -1,1 +1,215 @@
-Prova
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenzia Boscombe</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <h1>Agenzia Boscombe</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li class="tab" onclick="openTab(event, 'Investigatori')">Investigatori</li>
+                <li class="tab" onclick="openTab(event, 'Sedi')">Sedi</li>
+                <li class="tab" onclick="openTab(event, 'Informatori')">Informatori</li>
+                <li class="tab" onclick="openTab(event, 'Prove')">Prove</li>
+                <li class="tab" onclick="openTab(event, 'Clienti')">Clienti</li>
+                <li class="tab" onclick="openTab(event, 'Operazioni')">Operazioni</li>
+            </ul>
+        </nav>
+
+        <div id="Investigatori" class="tab-content">
+            <h2>Investigatori</h2>
+
+            <table id="investigatori-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Matricola</th>
+                        <th>Nominativo</th>
+                        <th>Codice Fiscale</th>
+                        <th>Mentore</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <table id="incarichi-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo incarico</th>
+                        <th>Costo orario</th>
+                        <th>ID Cliente</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <table id="incarichi-clienti-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nominativo</th>
+                        <th>Recapito</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="Sedi" class="tab-content">
+            <h2>Sedi</h2>
+
+            <table id="sedi-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Via</th>
+                        <th>Civico</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <table id="sedi-esperti-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Cognome</th>
+                        <th>Professione</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="Informatori" class="tab-content">
+            <h2>Informatori</h2>
+            
+            <table id="informatori-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Codice Fiscale</th>
+                        <th>Nome</th>
+                        <th>Cognome</th>
+                        <th>Paga</th>
+                        <th>Descrizione</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="Prove" class="tab-content">
+            <h2>Prove</h2>
+
+            <table id="prove-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Protocollo</th>
+                        <th>Luogo ott.</th>
+                        <th>Test primario</th>
+                        <th>Volatilità</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="Clienti" class="tab-content">
+            <h2>Clienti</h2>
+
+            <table id="clienti-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nominativo</th>
+                        <th>Recapito</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div id="Operazioni" class="tab-content">
+
+            <h2>Operazioni campione</h2>
+
+            <nav class="sub-nav">
+                <ul>
+                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione1')">Operazione 1</li>
+                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione2')">Operazione 2</li>
+                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione3')">Operazione 3</li>
+                    <li class="sub-tab" onclick="showOp('operazione4')">Operazione 4</li>
+                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione5')">Operazione 5</li>
+                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione6')">Operazione 6</li>
+                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione7')">Operazione 7</li>
+                    <li class="sub-tab" onclick="eseguiOp(event, 'operazione8')">Operazione 8</li>
+                </ul>
+            </nav>
+
+            <!--Tabelle per operazioni campione-->
+
+            <!--OP4: /boscombe/prove/sedi/:sedeID/-->
+            <div id="operazione4-div" style="visibility: hidden;">
+                <div>
+                    <form id="op4Form" onsubmit="eseguiOp('operazione4');return false;">
+                        ID sede: <input type="text" id="op4sedeID" style="width: 200px;"/>
+                        <br><br>
+                        <button type="submit">Esegui</button>
+                    </form>
+                </div>
+                <table id="operazione4-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>Professione</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!--OP5: /boscombe/clienti/:clienteID/incarichi/:tipoIncarico-->
+            <div id="operazione5-div" style="visibility: hidden;">
+                <div>
+                    <form id="op5Form" onsubmit="eseguiOp('operazione5');return false;">
+                        ID sede: <input type="text" id="op5clienteID" style="width: 200px;"/>
+                        <br>
+                        Tipo incarico: <input type="text" id="op5tipoIncarico" style="width: 200px;"/>
+                        <br><br>
+                        <button type="submit">Esegui</button>
+                    </form>
+                </div>
+                <table id="operazione5-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>Professione</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="op.js"></script>
+</body>
+</html>

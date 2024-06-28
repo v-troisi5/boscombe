@@ -24,3 +24,12 @@ app.use('/boscombe/', informatori_routes)
 app.get('/boscombe', function(request, response){
     response.sendFile('index.html',  {root: './web'});
 });
+app.get('/boscombe/styles.css', function(request, response){
+    response.sendFile('styles.css',  {root: './web'});
+});
+app.get('/boscombe/script.js', function(request, response){
+    response.sendFile('script.js',  {root: './web'});
+});
+app.get('/boscombe/op.js', function(request, response){
+    response.sendFile('op.js',  {root: './web'});
+});
