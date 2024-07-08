@@ -18,7 +18,7 @@ async function main() {
     //Clienti
     let collectionName = "clientes";
     let data = require('./clientes.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     let result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
@@ -26,7 +26,7 @@ async function main() {
     //Sedi
     collectionName = "sedes";
     data = require('./sedes.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
@@ -34,7 +34,7 @@ async function main() {
     //Informatori
     collectionName = "informatores";
     data = require('./informatores.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
@@ -42,7 +42,7 @@ async function main() {
     //Investigatori
     collectionName = "investigatores";
     data = require('./investigatores.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
@@ -64,7 +64,7 @@ async function main() {
     //Aggiungo gli incarichi
     console.log("Aggiungo gli incarichi");
     collectionName = "incaricos";
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     data.forEach(async function(c){
       c.incarichi.forEach((async function(i){
@@ -84,7 +84,7 @@ async function main() {
     //Afferenze
     collectionName = "afferenzas";
     data = require('./afferenzas.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
@@ -92,7 +92,7 @@ async function main() {
     //Collaborazioni
     collectionName = "collaboraziones";
     data = require('./collaboraziones.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
@@ -100,7 +100,7 @@ async function main() {
     //Consulenti
     collectionName = "consulentes";
     data = require('./consulentes.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
@@ -108,7 +108,7 @@ async function main() {
     //Prova
     collectionName = "provas";
     data = require('./provas.js');
-    db.collection(collectionName).drop();
+    await db.collection(collectionName).drop();
     currentCollection = db.collection(collectionName);
     result = await currentCollection.insertMany(data);
     console.log(`Inserted: ${result.insertedCount} documents` + ' in ' + collectionName);
